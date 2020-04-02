@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <style type="text/css">
+        #login {
+            background: 'red';
+        }
+
+        .form {
+            width: 200px;
+            height: 340px;
+            margin: auto;
+
+        }
+        .userList{
+            width: 400;
+            margin: auto;
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>phan header</header>
+    <div id="list">
+        <div>
+            <button v-on:click="selectForm('register')">Trang dang ky</button>
+            <button v-on:click="selectForm('login')">Trang dang nhap </button>
+        </div>
+
+        <div class="form" v-if="checkForm === 'login'">
+            <form v-on:submit.prevent  v-on:submit = "login()" action="" method="POST" >
+                <label>TK :</label>
+                <input v-model= "TK" type="text" name="tk">
+                <label>Mat khau :</label>
+                <input type="password" name="MK" v-model = "MK">
+                <input type="submit" value="Dang nhap">
+            </form>
+        </div>
+        <div class=" form" v-if="checkForm === 'register'">
+            <form action="">
+                <label>TK :</label>
+                <input type="text" name="tk">
+                <label>Mat khau :</label>
+                <input type="password" name="password">
+                <label>Nhap lai mat khau:</label>
+                <input type="password" name="checkPassword">
+                <label>Email:</label>
+                <input type="email" name="email">
+                <input type="submit" value="Dang ky ">
+            </form>
+        </div>
+        <div class="userList" >
+            <h6>Danh sach user tren he thong</h6>
+            <h1>Hien tai co {{listUser.length}} nguoi da dang ky</h1>
+            <ul v-if = "listUser.length != 0">
+               <div v-for = "lists in listUser">
+                    <li>
+                        <p>ID:{{lists.userId}}</p>
+                        <p>TK:{{lists.TK}}</p>
+                        <p>Email:{{lists.email}}</p>
+                    </li>
+                </div>
+            </ul>
+            <h4 v-else>Khong co thong tin !</h4>
+        </div>
+    </div>
+
+    <footer>chan trang <footer>
+</body>
+<script>
+    var vueIntances = new Vue({
+        el: "#list",
+        data: {
+            checkForm: '',
+            TK :'',
+            MK:'',
+            email:'',
+            isUser:false,
+            listUser: [
+                {
+                    "userId": 1,
+                    "TK": "levanB",
+                    "MK" : "levanb",
+                    'email' :'levanb@gmail.com'
+                },
+                {
+                    "userId": 2,
+                    "TK": "levanC",
+                    'email' :'levanc@gmail.com',
+                    "MK": "levanc"
+                },
+                {
+                    "userId": 3,
+                    "TK": "levanD",
+                    'email' :'levand@gmail.com',
+                    "MK" :"levand"
+                }
+                
+            ]
+        },
+        methods: {
+            selectForm: function (text) {
+                this.checkForm = text;
+            },
+            login:function(){
+               this.listUser.forEach(function(list){
+                     if(list.TK == this.TK && list.MK == this.MK){
+                         this.isUser = true;
+                     }else{
+                         this.isUser = false;
+                     }
+               });
+            }
+
+        }
+    })
+</script>
+
+</html>
